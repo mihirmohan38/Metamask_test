@@ -4,28 +4,12 @@ import FormInp from "./FormInp" ;
 import Web3 from "web3" ; 
 
 
-
-//import detectEthereumProvider from '@metamask/detect-provider';
-
-//const Web3 = require('web3');
 class App extends React.Component{
   constructor(){
     super(); 
     //var web3 = new Web3(Web3.givenProvider || "ws://localhost:8546");
     this.state = {  
       user : 'Placeholder',
-      transactionParameters : {
-        nonce: '0x00', // ignored by MetaMask
-        gasPrice: '0x09184e72a000', // customizable by user during MetaMask confirmation.
-        gas: '0x2710', // customizable by user during MetaMask confirmation.
-        to: '0x0000000000000000000000000000000000000000', // Required except during contract publications.
-        from: window.ethereum.selectedAddress, // must match user's active address.
-        value: '0x00', // Only required to send ether to the recipient from the initiating external account.
-        data:
-          '0x7f7465737432000000000000000000000000000000000000000000000000000000600057', // Optional, but used for defining smart contract creation and interaction.
-        chainId: 3, // Used to prevent transaction reuse across blockchains. Auto-filled by MetaMask.
-      },
-      //web3 :  new Web3(Web3.givenProvider || "ws://localhost:3000"), 
     }
   }
 
@@ -40,15 +24,13 @@ class App extends React.Component{
     this.setState({user: "XXXXXX"}) ; 
     try {
       await window.ethereum.enable()
-      //const accounts = await Web3.eth.getAccounts();
-      //console.log(accounts)
+
     } catch (error) {
       console.error(error)
     }
       this.setState({user : "address : " + window.ethereum.selectedAddress})
       console.log(window.ethereum)
-      //let piggybankContract = Web3.eth.contract([{ 'constant': false, 'inputs': [{ 'name': 'withdrawAmount', 'type': 'uint256' }], 'name': 'withdraw', 'outputs': [{ 'name': 'remainingBal', 'type': 'uint256' }], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'function' }, { 'constant': true, 'inputs': [], 'name': 'owner', 'outputs': [{ 'name': '', 'type': 'address' }], 'payable': false, 'stateMutability': 'view', 'type': 'function' }, { 'constant': false, 'inputs': [], 'name': 'deposit', 'outputs': [{ 'name': '', 'type': 'uint256' }], 'payable': true, 'stateMutability': 'payable', 'type': 'function' }, { 'inputs': [], 'payable': false, 'stateMutability': 'nonpayable', 'type': 'constructor' }])
-      //console.log(piggybankContract)
+
       if (window.ethereum) {
         window.web3 = new Web3(window.ethereum);
       }
