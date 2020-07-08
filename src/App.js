@@ -18,45 +18,61 @@ class App extends React.Component{
   }
 
   //isMetaMaskConnected = () => window.accounts && window.accounts.length > 0
+  isWalletConnected =() => window.ethereum.selectedAddress !== null ; 
 
   login = async() => {
     //connect to metamask and return user ID
+    if (!this.isMetaMaskInstalled){
+      window.alert("please install metamask") ; 
+
+      return 
+    }
+
     this.setState({user: "XXXXXX"}) ; 
     try {
       await window.ethereum.enable()
-
-    } catch (error) {
-      console.error(error)
-    }
       this.setState({user : "address : " + window.ethereum.selectedAddress})
       console.log(window.ethereum)
 
       if (window.ethereum) {
         window.web3 = new Web3(window.ethereum);
       }
+
+    } catch (error) {
+      console.error(error)
+      window.alert("meta mask is not connected or not installed, please try again.")
+    }
+
       
-      console.log(window.web3.eth)
+      //console.log(window.web3.eth)
   }
 
   send = async(event, toAddress, amount, currency) => {
     //send money interface
     event.preventDefault();
+
+    if (!(this.isMetaMaskInstalled() && this.isWalletConnected())) {
+      window.alert("please login through metamask.") ; 
+      return 
+    }
     console.log("sending to address", toAddress, currency , amount)
     // let tp = this.state.transactionParameters ; 
     // tp.to = toAddress ; 
     // tp.value = String.toString(amount) ; 
     // console.log(tp)
-
-
-    window.web3.eth.sendTransaction({
-      from: window.ethereum.selectedAddress,
-      to: toAddress,
-      value: Number(amount)*1000000000000000000
-  })
-  .then(function(receipt){
-      // add then here
-      console.log(receipt)
-  });
+    try {
+      window.web3.eth.sendTransaction({
+        from: window.ethereum.selectedAddress,
+        to: toAddress,
+        value: Number(amount)*1000000000000000000
+    })
+    .then(function(receipt){
+        // add then here
+        console.log(receipt)
+    });
+    }catch{
+      window.alert("please use valid senders ID")
+    }
     //this.setState({transactionParameters : tp}) ; 
      
     // const txHash = await window.ethereum.request({
