@@ -42,10 +42,10 @@ class App extends React.Component{
     //send money interface
     event.preventDefault();
     console.log("sending to address", toAddress, currency , amount)
-    let tp = this.state.transactionParameters ; 
-    tp.to = toAddress ; 
-    tp.value = String.toString(amount) ; 
-    console.log(tp)
+    // let tp = this.state.transactionParameters ; 
+    // tp.to = toAddress ; 
+    // tp.value = String.toString(amount) ; 
+    // console.log(tp)
 
 
     window.web3.eth.sendTransaction({
